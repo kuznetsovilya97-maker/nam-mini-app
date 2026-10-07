@@ -1,9 +1,11 @@
 {
-  "name": "@nam/shared",
-  "version": "0.1.0",
+  "name": "nam-mini-app",
   "private": true,
-  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "packages/shared"
+  ],
   "scripts": {
-    "build": "echo shared-build-ok"
+    "build": "npm run build --workspace=@nam/web"
   }
 }
