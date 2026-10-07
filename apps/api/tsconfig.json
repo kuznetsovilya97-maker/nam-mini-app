@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+"paths": {
+  "@nam/shared": ["../../packages/shared/src"]
+},
     "rootDir": "./src",
     "target": "ES2022",
     "module": "NodeNext",
