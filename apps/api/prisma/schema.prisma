@@ -1,0 +1,101 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum AssignmentStatus {
+  NEW
+  ACTIVE
+  COMPLETED
+  SKIPPED
+  EXPIRED
+}
+
+model User {
+  id          String           @id @default(cuid())
+  telegramId  BigInt           @unique
+  name        String
+  timezone    String            @default("Europe/Moscow")
+  city        String?
+  createdAt   DateTime          @default(now())
+  memberships CoupleMember[]
+  assignments Assignment[]
+}
+
+model Couple {
+  id               String           @id @default(cuid())
+  inviteToken      String           @unique @default(cuid())
+  relationshipStart DateTime?
+  level            String           @default("Знакомство")
+  xp               Int              @default(0)
+  streak           Int              @default(0)
+  createdAt        DateTime         @default(now())
+  members          CoupleMember[]
+  assignments      Assignment[]
+  weeks            Week[]
+}
+
+model CoupleMember {
+  coupleId String
+  userId   String
+  joinedAt DateTime @default(now())
+  couple   Couple @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([coupleId, userId])
+}
+
+model Task {
+  id               String       @id
+  title            String
+  description      String
+  difficulty       Difficulty
+  category         String
+  estimatedMinutes Int
+  budgetMax        Int          @default(0)
+  adultOnly        Boolean      @default(false)
+  active           Boolean      @default(true)
+  assignments      Assignment[]
+}
+
+model Week {
+  id        String       @id @default(cuid())
+  coupleId  String
+  startsAt  DateTime
+  endsAt    DateTime
+  createdAt DateTime @default(now())
+  couple    Couple       @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  assignments Assignment[]
+  @@unique([coupleId, startsAt])
+}
+
+model Assignment {
+  id          String           @id @default(cuid())
+  coupleId    String
+  userId      String
+  weekId      String
+  taskId      String
+  difficulty  Difficulty
+  status      AssignmentStatus @default(ACTIVE)
+  issuedAt    DateTime         @default(now())
+  completedAt DateTime?
+  rating      Int?
+  reaction    String?
+  slot        String
+  scheduledAt DateTime?
+  couple      Couple           @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  week        Week             @relation(fields: [weekId], references: [id], onDelete: Cascade)
+  task        Task             @relation(fields: [taskId], references: [id])
+  @@unique([userId, weekId, slot])
+  @@index([coupleId, weekId])
+}
