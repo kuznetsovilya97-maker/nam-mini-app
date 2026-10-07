@@ -13,8 +13,8 @@
     "@fastify/cors": "latest",
     "fastify": "latest",
     "zod": "latest",
-    "@prisma/client": "latest",
-    "prisma": "latest"
+    "@prisma/client": "^6.19.0",
+    "prisma": "^6.19.0"
   },
   "devDependencies": {
     "@types/node": "latest",
