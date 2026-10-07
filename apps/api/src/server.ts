@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import crypto from 'node:crypto';
 import { z } from 'zod';
-import { PrismaClient, Difficulty, AssignmentStatus } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { tasks, pickTask } from './tasks.js';
 
 const prisma = new PrismaClient();
