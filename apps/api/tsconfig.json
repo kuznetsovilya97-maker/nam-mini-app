@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@nam/shared": ["../../packages/shared/src"]
     },
@@ -11,8 +10,7 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "dist",
-    "ignoreDeprecations": "6.0"
+    "outDir": "dist"
   },
   "include": ["src"]
 }
