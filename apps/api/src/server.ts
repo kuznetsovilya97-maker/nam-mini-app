@@ -774,7 +774,7 @@ app.get('/api/weeks/:weekId/reveal', async (request, reply) => {
     });
   }
 
-  return {
+   return {
     assignments: all.map(a => ({
       id: a.id,
       userId: a.userId,
@@ -786,11 +786,4 @@ app.get('/api/weeks/:weekId/reveal', async (request, reply) => {
   };
 });
 
-const port = Number(
-  process.env.PORT ?? 3001
-);
-
-await app.listen({
-  port,
-  host: '0.0.0.0'
-});
+export default app;
