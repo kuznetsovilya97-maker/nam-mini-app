@@ -1,11 +1,9 @@
 {
-  "name": "nam-mini-app",
+  "name": "@nam/shared",
+  "version": "0.1.0",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "type": "module",
   "scripts": {
-    "build": "tsc"
-    "dev:web": "npm --workspace apps/web run dev",
-    "dev:api": "npm --workspace apps/api run dev",
-    "build": "npm run build --workspaces"
+    "build": "echo shared-build-ok"
   }
 }
